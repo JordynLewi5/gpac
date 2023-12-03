@@ -5,10 +5,11 @@ import gpac
 import random
 from functools import cache
 from math import inf
+from tree_genotype import TreeGenotype
 
 
-def manhattan(a, b):
-    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+# def manhattan(a, b):
+#     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
 '''Fitness function that plays a game using the provided pac_controller
@@ -20,6 +21,7 @@ def play_GPac(pac_controller, ghost_controller=None, game_map=None, **kwargs):
     game_map = parse_map(game_map)
     game = gpac.GPacGame(game_map, **kwargs)
 
+    n = 0
     # Game loop, representing one turn.
     while not game.gameover:
         # Evaluate moves for each player.
@@ -41,9 +43,15 @@ def play_GPac(pac_controller, ghost_controller=None, game_map=None, **kwargs):
                     ####################################
                     '''
                     # 2a TODO: Score all of the states stored in s_primes by evaluating your tree.
+                    pac_controller_state_scores = [pac_controller.evaluate(state, player) for state in s_primes]
+                    
+                    best_score = -inf
+                    for i in range(len(pac_controller_state_scores)):
+                        if pac_controller_state_scores[i] > best_score:
+                            best_score = pac_controller_state_scores[i]
 
-                    # 2a TODO: Assign index of state with the best score to selected_action_idx.
-                    selected_action_idx = None
+                            # 2a TODO: Assign index of state with the best score to selected_action_idx.
+                            selected_action_idx = i
 
                     # You may want to uncomment these print statements for debugging.
                     # print(selected_action_idx)
@@ -67,10 +75,16 @@ def play_GPac(pac_controller, ghost_controller=None, game_map=None, **kwargs):
                     ####################################
                     '''
                     # 2c TODO: Score all of the states stored in s_primes by evaluating your tree
+                    ghost_controller_state_scores = [ghost_controller.evaluate(state, player) for state in s_primes]
 
                     # 2c TODO: Assign index of state with the best score to selected_action_idx.
-                    selected_action_idx = None
+                    best_score = -inf
+                    for i in range(len(ghost_controller_state_scores)):
+                        if ghost_controller_state_scores[i] > best_score:
+                            best_score = ghost_controller_state_scores[i]
 
+                            # 2a TODO: Assign index of state with the best score to selected_action_idx.
+                            selected_action_idx = i
                     # You may want to uncomment these print statements for debugging.
                     # print(selected_action_idx)
                     # print(actions)

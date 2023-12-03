@@ -46,10 +46,20 @@ class BaseEvolutionPopulation():
 
         # TODO: Get pairs of parents
         # HINT: range(0, len(parents), 2) to iterate two at a time
+        pairs = []
+        for i in range(0, len(parents), 2):
+            p1 = parents[i]
+            p2 = parents[i + 1]
+            pairs.append([p1, p2])
 
         # TODO: Recombine each pair to generate a child
         # HINT: With parents p1 and p2, get a child with
         #       p1.recombine(p2, **self.recombination_kwargs)
+        children = []
+        for i in range(len(pairs)):
+            p1 = pairs[i][0]
+            p2 = pairs[i][1]
+            children.append(p1.recombine(p2, **self.recombination_kwargs))
 
         # TODO: Mutate each child independently with probability self.mutation_rate.
         #       The probability is independent for each child, meaning you should
@@ -61,9 +71,14 @@ class BaseEvolutionPopulation():
         #       Keep in mind this does not modify child, it returns a new object
         mutated_child_count = 0
 
+        for i in range(len(children)):
+            if random.random() < self.mutation_rate:
+                mutated_child_count += 1
+                children[i] = children[i].mutate(**self.mutation_kwargs)
+
+
         self.log.append(f'Number of children: {len(children)}')
         self.log.append(f'Number of mutations: {mutated_child_count}')
-
         return children
 
 

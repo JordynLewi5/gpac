@@ -1,9 +1,9 @@
 [ea]
-mu = 50
-num_children = 4_950
-mutation_rate = 0.000001
-parent_selection = k_tournament_with_replacement
-survival_selection = k_tournament_without_replacement
+mu = 400
+num_children = 100
+mutation_rate = 0.2
+parent_selection = fitness_proportionate_selection
+survival_selection = fitness_proportionate_selection 
 individual_class = TreeGenotype
 
 [parent_selection_kwargs]
@@ -29,7 +29,7 @@ terminals = ${problem:terminals}
 nonterminals = ${problem:nonterminals}
 
 [fitness_kwargs]
-parsimony_coefficient = 1_000_000
+parsimony_coefficient = .33
 experiment = green
 
 # Don't touch any of these.

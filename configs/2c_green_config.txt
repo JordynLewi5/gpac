@@ -1,18 +1,18 @@
 [shared_configs]
-depth_limit = 7
+depth_limit = 4
 nonterminals = ('+', '-', '*', '/', 'RAND')
 
 [fitness_kwargs]
-pac_parsimony_coefficient = 1_000_000
-ghost_parsimony_coefficient = 1_000_000
+pac_parsimony_coefficient = .5
+ghost_parsimony_coefficient = .5
 experiment = green
 
 [pac_ea]
-mu = 5
-num_children = 4_995
-mutation_rate = 0.000001
-parent_selection = k_tournament_with_replacement
-survival_selection = k_tournament_without_replacement
+mu = 100
+num_children = 150
+mutation_rate = 0.3
+parent_selection = fitness_proportionate_selection
+survival_selection = fitness_proportionate_selection
 individual_class = TreeGenotype
 
 [pac_parent_selection_kwargs]
@@ -28,10 +28,10 @@ nonterminals = ${shared_configs:nonterminals}
 
 [ghost_ea]
 mu = 100
-num_children = 1
-mutation_rate = 0.000001
-parent_selection = k_tournament_with_replacement
-survival_selection = k_tournament_without_replacement
+num_children = 100
+mutation_rate = 0.3
+parent_selection = fitness_proportionate_selection
+survival_selection = fitness_proportionate_selection
 individual_class = TreeGenotype
 
 [ghost_parent_selection_kwargs]
